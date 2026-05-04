@@ -39,7 +39,7 @@ startBackgroundWorkers().catch(err => {
   process.exit(1);
 });
 
-const server = app.listen({ port: METRICS_PORT });
+const server = Bun.serve({ fetch: app.fetch, port: METRICS_PORT });
 
 console.log(`Metrics server listening on port ${METRICS_PORT}`);
 

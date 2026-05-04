@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { SQL } from 'bun';
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -6,10 +6,6 @@ if (!connectionString) {
   process.exit(1);
 }
 
-const pool = new Pool({ connectionString });
+const sql = new SQL(connectionString);
 
-export default pool;
-
-export async function query(text: string, params?: any[]) {
-  return pool.query(text, params);
-}
+export default sql;
