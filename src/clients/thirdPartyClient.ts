@@ -19,9 +19,9 @@ export async function fetchJsonWithRetries(url: string, opts: any = {}, retries 
   }
 }
 
-export async function fetchRxPower(base: string, apiKey: string, circuitId: string, signal?: AbortSignal, maxRetries = 3) {
-  const url = `${base.replace(/\/+$/,'')}/command?customerID=${encodeURIComponent(circuitId)}&commandName=RxPower`;
-  return fetchJsonWithRetries(url, { headers: { 'X-API-Key': apiKey }, method: 'GET' }, maxRetries, signal);
+export async function fetchRxPower(url: string, apiKey: string, circuitId: string, signal?: AbortSignal, maxRetries = 3) {
+  const fullUrl = `${url.replace(/\/+$/,'')}?customerID=${encodeURIComponent(circuitId)}&commandName=RxPower`;
+  return fetchJsonWithRetries(fullUrl, { headers: { 'X-API-Key': apiKey }, method: 'GET' }, maxRetries, signal);
 }
 
 export async function fetchSubscribersPage(base: string, token: string, page = 1, signal?: AbortSignal, maxRetries = 3) {

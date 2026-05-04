@@ -28,7 +28,7 @@ The project follows a standard layered architecture:
 ### Setup Instructions
 1. **Environment Setup**: Copy `.env.example` to `.env` and populate all necessary environment variables:
    - `DATABASE_URL`
-   - `THIRD_PARTY_API_BASE`, `X_API_KEY`
+   - `THIRD_PARTY_API_URL`, `X_API_KEY`
    - `SUBSCRIBER_API_BASE`, `SUBSCRIBER_BEARER_TOKEN`
    - `OPERATOR_ID`
    - `METRICS_PORT` (defaults to 3000)
