@@ -2,7 +2,7 @@ FTTx RX Power Monitor (TypeScript + Hono, Bun runtime)
 
 Quickstart:
 1. Install Bun: https://bun.sh
-2. Copy .env.example to .env and set environment variables (DATABASE_URL, THIRD_PARTY_API_BASE, SUBSCRIBER_API_BASE, X_API_KEY, SUBSCRIBER_BEARER_TOKEN, OPERATOR_ID, ...)
+2. Copy .env.example to .env and set environment variables (DATABASE_URL, THIRD_PARTY_API_URL, SUBSCRIBER_API_BASE, X_API_KEY, SUBSCRIBER_BEARER_TOKEN, OPERATOR_ID, ...)
 3. Install dependencies: bun install
 4. Initialize DB schema: psql $DATABASE_URL -f sql/schema.sql
 5. Start server (starts metrics server + background workers): bun run start

@@ -4,14 +4,14 @@ import { fetchRxPower } from '../clients/thirdPartyClient';
 import { sleep, parseRxPower } from '../utils';
 
 export async function startPoller(opts?: { apiBase?: string; apiKey?: string; requestDelayMs?: number; maxRetries?: number; safeRecheckHours?: number; signal?: AbortSignal }) {
-  const THIRD_PARTY_API_BASE = opts?.apiBase || process.env.THIRD_PARTY_API_BASE || '';
+  const THIRD_PARTY_API_URL = opts?.apiBase || process.env.THIRD_PARTY_API_URL || '';
   const API_KEY = opts?.apiKey || process.env.X_API_KEY || '';
   const REQUEST_DELAY_MS = opts?.requestDelayMs ?? parseInt(process.env.REQUEST_DELAY_MS || '200', 10);
   const MAX_RETRIES = opts?.maxRetries ?? parseInt(process.env.REQUEST_MAX_RETRIES || '3', 10);
   const SAFE_RECHECK_HOURS = opts?.safeRecheckHours ?? parseInt(process.env.RX_SAFE_RECHECK_HOURS || '4', 10);
   const signal = opts?.signal;
 
-  if (!THIRD_PARTY_API_BASE) throw new Error('THIRD_PARTY_API_BASE not set');
+  if (!THIRD_PARTY_API_URL) throw new Error('THIRD_PARTY_API_URL not set');
   if (!API_KEY) throw new Error('X_API_KEY not set');
 
   async function pollOnce() {
@@ -26,7 +26,7 @@ export async function startPoller(opts?: { apiBase?: string; apiKey?: string; re
           continue;
         }
 
-        const body = await fetchRxPower(THIRD_PARTY_API_BASE, API_KEY, circuit, signal, MAX_RETRIES);
+        const body = await fetchRxPower(THIRD_PARTY_API_URL, API_KEY, circuit, signal, MAX_RETRIES);
         const item = Array.isArray(body?.result) ? (body.result.find((i: any) => i.circuit_id === circuit) || body.result[0]) : null;
         if (item && item.status === 'success') {
           const rx = parseRxPower(item.command_return);
