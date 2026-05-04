@@ -27,6 +27,7 @@ export async function upsertRx(circuitId: string, rxPowerDbm: number | null, sou
 }
 
 export async function getAllLatestRx() {
+  const retentionHours = parseInt(process.env.METRICS_RETENTION_HOURS || '24', 10);
   const rows = await sql`
     SELECT r.circuit_id, r.rx_power_dbm,
            sub.subscriber_id, sub.subscriber_name
@@ -38,6 +39,7 @@ export async function getAllLatestRx() {
       ORDER BY s.updated_at DESC
       LIMIT 1
     ) sub ON true
+    WHERE r.measured_at >= now() - (${retentionHours}::int * INTERVAL '1 hour')
   `;
   return rows;
 }
